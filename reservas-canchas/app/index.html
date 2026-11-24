@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Reserva de Canchas</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="saltar" href="#listado">Saltar al listado de turnos</a>
+
+  <header class="cabecera">
+    <h1>Reserva de Canchas</h1>
+    <p>Organizá los turnos del día: reservá, confirmá, cobrá la seña y evitá superposiciones.</p>
+  </header>
+
+  <main class="contenedor">
+    <!-- Panel de métricas: se actualiza solo cada vez que cambia algo -->
+    <section aria-labelledby="t-resumen" class="metricas">
+      <h2 id="t-resumen" class="solo-lectores">Resumen</h2>
+      <div class="metrica"><span class="valor" id="m-activas">0</span><span>Reservas activas</span></div>
+      <div class="metrica"><span class="valor" id="m-recaudado">$0</span><span>Total recaudado</span></div>
+      <div class="metrica"><span class="valor" id="m-pendiente">$0</span><span>Saldo a cobrar</span></div>
+      <div class="metrica"><span class="valor" id="m-filtrados">0</span><span>Turnos mostrados</span></div>
+    </section>
+
+    <div class="columnas">
+      <!-- Formulario de reserva -->
+      <section aria-labelledby="t-form" class="tarjeta">
+        <h2 id="t-form">Nueva reserva</h2>
+        <form id="form-turno" novalidate>
+          <label for="cancha">Cancha</label>
+          <select id="cancha" required></select>
+
+          <label for="responsable">Nombre del responsable</label>
+          <input id="responsable" type="text" autocomplete="name" required>
+
+          <div class="fila">
+            <div>
+              <label for="fecha">Fecha</label>
+              <input id="fecha" type="date" required>
+            </div>
+            <div>
+              <label for="hora">Horario de inicio</label>
+              <input id="hora" type="time" min="08:00" max="22:00" step="1800" required>
+            </div>
+          </div>
+
+          <div class="fila">
+            <div>
+              <label for="duracion">Duración</label>
+              <select id="duracion" required>
+                <option value="60">1 hora</option>
+                <option value="90">1 h 30 min</option>
+                <option value="120">2 horas</option>
+              </select>
+            </div>
+            <div>
+              <label for="senia">Seña ($)</label>
+              <input id="senia" type="number" min="0" step="100" value="0" inputmode="numeric">
+            </div>
+          </div>
+
+          <p class="total" id="vista-total" aria-live="polite"></p>
+          <p class="mensaje" id="mensaje" role="alert"></p>
+          <button type="submit" class="btn primario">Reservar turno</button>
+        </form>
+      </section>
+
+      <!-- Filtros y listado -->
+      <section aria-labelledby="t-lista" class="tarjeta" id="listado">
+        <h2 id="t-lista">Turnos</h2>
+        <div class="filtros">
+          <div>
+            <label for="f-cancha">Cancha</label>
+            <select id="f-cancha"><option value="">Todas</option></select>
+          </div>
+          <div>
+            <label for="f-estado">Estado</label>
+            <select id="f-estado">
+              <option value="">Todos</option>
+              <option value="pendiente">Pendiente</option>
+              <option value="confirmado">Confirmado</option>
+              <option value="pagado">Pagado</option>
+              <option value="cancelado">Cancelado</option>
+            </select>
+          </div>
+          <div>
+            <label for="f-fecha">Fecha</label>
+            <input id="f-fecha" type="date">
+          </div>
+          <button type="button" class="btn" id="limpiar-filtros">Quitar filtros</button>
+        </div>
+
+        <ul class="turnos" id="lista-turnos"></ul>
+
+        <button type="button" class="btn peligro" id="reiniciar">Restablecer todos los datos</button>
+      </section>
+    </div>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

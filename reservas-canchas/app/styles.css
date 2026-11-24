@@ -1,0 +1,94 @@
+/* ===== Variables de diseño: cambiando estos valores cambia toda la app ===== */
+:root {
+  --verde: #14532d;
+  --verde-claro: #16a34a;
+  --lima: #d9f99d;
+  --fondo: #f4f6f1;
+  --tarjeta: #ffffff;
+  --texto: #1c2a21;
+  --suave: #5b6b60;
+  --borde: #d6ddd3;
+  --error: #b91c1c;
+  --radio: 12px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: var(--fondo);
+  color: var(--texto);
+  line-height: 1.5;
+}
+
+/* Accesibilidad: foco visible y enlace para saltar al contenido */
+:focus-visible { outline: 3px solid var(--verde-claro); outline-offset: 2px; }
+.saltar { position: absolute; left: -999px; background: #fff; padding: .5rem 1rem; }
+.saltar:focus { left: .5rem; top: .5rem; z-index: 10; }
+.solo-lectores { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+
+/* ===== Cabecera ===== */
+.cabecera { background: var(--verde); color: #fff; padding: 1.5rem 1rem; text-align: center; }
+.cabecera h1 { margin: 0 0 .25rem; font-size: clamp(1.5rem, 4vw, 2.2rem); }
+.cabecera p { margin: 0; color: var(--lima); }
+
+.contenedor { max-width: 1100px; margin: 0 auto; padding: 1rem; }
+
+/* ===== Métricas: 2 columnas en celular, 4 en pantallas grandes ===== */
+.metricas { display: grid; grid-template-columns: repeat(2, 1fr); gap: .75rem; margin-bottom: 1rem; }
+.metrica { background: var(--tarjeta); border: 1px solid var(--borde); border-radius: var(--radio);
+  padding: .9rem; display: flex; flex-direction: column; color: var(--suave); font-size: .9rem; }
+.metrica .valor { font-size: 1.6rem; font-weight: 700; color: var(--verde); }
+
+/* ===== Layout principal: 1 columna en celular, 2 en escritorio ===== */
+.columnas { display: grid; gap: 1rem; grid-template-columns: 1fr; }
+.tarjeta { background: var(--tarjeta); border: 1px solid var(--borde); border-radius: var(--radio); padding: 1.1rem; }
+.tarjeta h2 { margin-top: 0; }
+
+/* ===== Formularios ===== */
+label { display: block; font-size: .85rem; font-weight: 600; margin: .8rem 0 .25rem; }
+input, select {
+  width: 100%; padding: .6rem .7rem; font: inherit;
+  border: 1px solid var(--borde); border-radius: 8px; background: #fff; color: inherit;
+}
+.fila { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; }
+.total { font-weight: 700; color: var(--verde); margin: 1rem 0 .25rem; }
+.mensaje { min-height: 1.4rem; margin: .25rem 0 .5rem; font-size: .9rem; color: var(--error); }
+.mensaje.ok { color: var(--verde-claro); }
+
+/* ===== Botones ===== */
+.btn { font: inherit; font-size: .9rem; padding: .55rem .9rem; border-radius: 8px; cursor: pointer;
+  border: 1px solid var(--borde); background: #fff; color: var(--texto); }
+.btn:hover { background: #eef3ea; }
+.btn.primario { width: 100%; background: var(--verde); color: #fff; border-color: var(--verde); padding: .75rem; font-weight: 600; }
+.btn.primario:hover { background: var(--verde-claro); }
+.btn.peligro { color: var(--error); border-color: var(--error); margin-top: 1rem; }
+
+/* ===== Filtros ===== */
+.filtros { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; align-items: end; margin-bottom: 1rem; }
+
+/* ===== Lista de turnos (tarjetas, se adaptan a cualquier ancho) ===== */
+.turnos { list-style: none; padding: 0; margin: 0; display: grid; gap: .75rem; }
+.turno { border: 1px solid var(--borde); border-left: 6px solid var(--verde-claro); border-radius: 10px; padding: .8rem; }
+.turno.cancelado { border-left-color: #9ca3af; opacity: .7; }
+.turno.pagado { border-left-color: var(--verde); }
+.turno.pendiente { border-left-color: #d97706; }
+.turno h3 { margin: 0; font-size: 1.05rem; }
+.turno p { margin: .15rem 0; color: var(--suave); font-size: .9rem; }
+.etiqueta { display: inline-block; padding: .05rem .55rem; border-radius: 99px; background: var(--lima); color: var(--verde);
+  font-size: .75rem; font-weight: 700; text-transform: uppercase; margin-left: .4rem; }
+.acciones { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .6rem; }
+.vacio { text-align: center; color: var(--suave); padding: 1.5rem 0; }
+
+/* ===== Tablet y escritorio ===== */
+@media (min-width: 700px) {
+  .metricas { grid-template-columns: repeat(4, 1fr); }
+  .filtros { grid-template-columns: repeat(4, 1fr); }
+}
+@media (min-width: 960px) {
+  .columnas { grid-template-columns: 360px 1fr; align-items: start; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .btn { transition: background .15s; }
+}
